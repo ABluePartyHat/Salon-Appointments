@@ -1,0 +1,10 @@
+/* Keep project-specific CSS here; utility classes live in index.html via Tailwind. */
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #c26d4b;
+  color: #ffffff;
+}
