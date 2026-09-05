@@ -1,10 +1,14 @@
-/* Keep project-specific CSS here; utility classes live in index.html via Tailwind. */
-
-html {
-  scroll-behavior: smooth;
-}
-
-::selection {
-  background: #c26d4b;
-  color: #ffffff;
-}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; }
+::selection { background: #b87479; color: #fff; }
+.service-card { cursor: pointer; border: 1px solid rgba(81, 52, 67, .12); border-radius: 1rem; padding: 1rem; transition: border-color .2s, background-color .2s, box-shadow .2s; }
+.service-card:has(input:checked) { border-color: #b87479; background: #f4e9e4; box-shadow: 0 0 0 1px #b87479; }
+.service-card:hover { border-color: rgba(184, 116, 121, .7); }
+.field-wrap { display: block; }
+.field-wrap > span { display: block; margin-bottom: .5rem; color: rgba(36, 29, 38, .6); font-size: .75rem; font-weight: 600; }
+.field-wrap b { color: #b87479; }
+.field-wrap input, .field-wrap select, .field-wrap textarea { width: 100%; border: 1px solid rgba(81, 52, 67, .16); border-radius: .75rem; background: #fff; padding: .8rem .9rem; color: #241d26; outline: none; transition: border-color .2s, box-shadow .2s; }
+.field-wrap input::placeholder, .field-wrap textarea::placeholder { color: rgba(36, 29, 38, .32); }
+.field-wrap input:focus, .field-wrap select:focus, .field-wrap textarea:focus { border-color: #b87479; box-shadow: 0 0 0 3px rgba(184, 116, 121, .14); }
+.field-wrap textarea { resize: vertical; }

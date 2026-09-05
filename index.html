@@ -3,139 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="A clean Tailwind CSS starter page with placeholder content."
-    />
-    <title>Tailwind Starter</title>
-
+    <meta name="description" content="Book your next appointment at Miro Salon." />
+    <title>Book an appointment · Miro Salon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              ink: "#172033",
-              cream: "#faf8f4",
-              accent: "#c26d4b",
-            },
-          },
-        },
-      };
+      tailwind.config = { theme: { extend: { colors: { ink: '#241d26', plum: '#513443', rose: '#b87479', blush: '#f4e9e4', paper: '#fcfaf8', sage: '#8b9b8a' }, fontFamily: { display: ['Georgia', 'ui-serif', 'serif'] }, boxShadow: { soft: '0 18px 55px rgba(81, 52, 67, .12)' } } };
     </script>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-
-  <body class="bg-cream text-ink antialiased">
-    <header class="border-b border-slate-200/80 bg-cream/90 backdrop-blur">
-      <nav
-        class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 lg:px-8"
-        aria-label="Main navigation"
-      >
-        <a href="#" class="text-lg font-bold tracking-tight">Studio<span class="text-accent">.</span></a>
-        <div class="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
-          <a class="transition hover:text-accent" href="#about">About</a>
-          <a class="transition hover:text-accent" href="#services">Services</a>
-          <a class="transition hover:text-accent" href="#contact">Contact</a>
-        </div>
-        <a
-          href="#contact"
-          class="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accent"
-        >
-          Get started
-        </a>
+  <body class="bg-paper text-ink antialiased">
+    <header class="border-b border-plum/10 bg-paper/90 backdrop-blur">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10" aria-label="Main navigation">
+        <a href="#top" class="font-display text-2xl tracking-tight">miro<span class="text-rose">.</span></a>
+        <div class="hidden items-center gap-8 text-sm font-medium text-ink/65 sm:flex"><a class="transition hover:text-rose" href="#booking">Book online</a><a class="transition hover:text-rose" href="#details">Visit us</a></div>
+        <a href="tel:+12125550148" class="flex items-center gap-2 text-sm font-semibold text-plum"><span class="grid h-8 w-8 place-items-center rounded-full bg-blush text-xs">✦</span>(212) 555-0148</a>
       </nav>
     </header>
-
-    <main>
-      <section class="mx-auto grid max-w-6xl gap-12 px-6 pb-24 pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:pt-28">
-        <div>
-          <p class="mb-5 text-sm font-bold uppercase tracking-[0.2em] text-accent">A thoughtful beginning</p>
-          <h1 class="max-w-3xl text-5xl font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            Build something <span class="text-accent">meaningful.</span>
-          </h1>
-          <p class="mt-7 max-w-xl text-lg leading-8 text-slate-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. Donec sollicitudin molestie malesuada.
-          </p>
-          <div class="mt-9 flex flex-wrap gap-4">
-            <a href="#contact" class="rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition hover:-translate-y-0.5 hover:bg-ink">
-              Start a conversation
-            </a>
-            <a href="#about" class="rounded-full border border-slate-300 px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-accent hover:text-accent">
-              Learn more
-            </a>
-          </div>
-        </div>
-
-        <div class="relative mx-auto w-full max-w-md">
-          <div class="absolute -inset-4 rounded-[2rem] bg-accent/10 blur-2xl"></div>
-          <div class="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-white shadow-2xl">
-            <div class="mb-20 flex items-center justify-between text-sm text-slate-300">
-              <span>01 / 03</span>
-              <span class="h-px w-16 bg-slate-600"></span>
-            </div>
-            <div class="grid aspect-square place-items-center rounded-2xl border border-white/10 bg-white/5">
-              <span class="text-8xl font-light text-accent/90">✦</span>
-            </div>
-            <p class="mt-8 text-xl font-semibold">Simple ideas, carefully made.</p>
-            <p class="mt-2 text-sm leading-6 text-slate-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
+    <main id="top">
+      <section class="mx-auto grid max-w-7xl gap-12 px-6 pb-14 pt-14 lg:grid-cols-[.9fr_1.1fr] lg:items-end lg:px-10 lg:pb-20 lg:pt-20">
+        <div><p class="mb-5 text-xs font-bold uppercase tracking-[.24em] text-rose">Your time, beautifully spent</p><h1 class="max-w-xl font-display text-5xl leading-[1.02] tracking-[-.03em] text-plum sm:text-6xl lg:text-7xl">Make time for <em class="font-normal text-rose">you.</em></h1><p class="mt-7 max-w-md text-base leading-7 text-ink/65">A calm space for effortless color, thoughtful cuts, and a little more confidence. Choose a time that works for you.</p><div class="mt-8 flex items-center gap-3 text-sm text-ink/60"><span class="h-2 w-2 rounded-full bg-sage"></span> New York · By appointment</div></div>
+        <div class="relative overflow-hidden rounded-[2rem] bg-plum px-7 py-8 text-paper shadow-soft sm:px-10"><div class="absolute -right-10 -top-16 h-48 w-48 rounded-full border border-white/10"></div><div class="absolute -bottom-24 right-16 h-48 w-48 rounded-full border border-white/10"></div><div class="relative flex items-start justify-between gap-6"><div><p class="text-xs font-bold uppercase tracking-[.2em] text-rose/90">Miro salon</p><p class="mt-4 max-w-sm font-display text-3xl leading-tight sm:text-4xl">Your next good hair day starts here.</p></div><span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-white/15 text-xl text-rose">✦</span></div><div class="relative mt-10 flex items-center gap-5 text-sm text-paper/65"><span class="h-px w-12 bg-rose"></span><span>01 — 03</span><span class="h-px flex-1 bg-white/15"></span></div></div>
       </section>
-
-      <section id="about" class="border-y border-slate-200/80 bg-white/60">
-        <div class="mx-auto max-w-6xl px-6 py-20 lg:px-8">
-          <div class="grid gap-10 lg:grid-cols-3">
-            <div>
-              <p class="text-sm font-bold uppercase tracking-[0.2em] text-accent">About</p>
-              <h2 class="mt-3 text-3xl font-bold tracking-tight">A solid place to start.</h2>
-            </div>
-            <p class="leading-8 text-slate-600 lg:col-span-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" class="mx-auto max-w-6xl px-6 py-20 lg:px-8">
-        <p class="text-sm font-bold uppercase tracking-[0.2em] text-accent">Services</p>
-        <div class="mt-8 grid gap-5 md:grid-cols-3">
-          <article class="rounded-2xl border border-slate-200 bg-white p-7">
-            <span class="text-2xl text-accent">01</span>
-            <h3 class="mt-10 text-xl font-bold">Strategy</h3>
-            <p class="mt-3 text-sm leading-6 text-slate-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </article>
-          <article class="rounded-2xl border border-slate-200 bg-white p-7">
-            <span class="text-2xl text-accent">02</span>
-            <h3 class="mt-10 text-xl font-bold">Design</h3>
-            <p class="mt-3 text-sm leading-6 text-slate-600">Sed posuere consectetur est at lobortis. Maecenas faucibus.</p>
-          </article>
-          <article class="rounded-2xl border border-slate-200 bg-white p-7">
-            <span class="text-2xl text-accent">03</span>
-            <h3 class="mt-10 text-xl font-bold">Delivery</h3>
-            <p class="mt-3 text-sm leading-6 text-slate-600">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="contact" class="bg-ink text-white">
-        <div class="mx-auto max-w-6xl px-6 py-20 lg:px-8">
-          <div class="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <div>
-              <p class="text-sm font-bold uppercase tracking-[0.2em] text-accent">Contact</p>
-              <h2 class="mt-3 max-w-xl text-4xl font-bold tracking-tight">Let’s make the first move.</h2>
-            </div>
-            <a href="mailto:hello@example.com" class="text-lg font-semibold text-accent transition hover:text-white">hello@example.com →</a>
-          </div>
+      <section id="booking" class="border-y border-plum/10 bg-blush/45">
+        <div class="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1fr_320px] lg:px-10 lg:py-16">
+          <form id="booking-form" class="rounded-[1.75rem] bg-paper p-6 shadow-soft sm:p-9" novalidate>
+            <div class="flex flex-col justify-between gap-3 border-b border-plum/10 pb-7 sm:flex-row sm:items-end"><div><p class="text-xs font-bold uppercase tracking-[.2em] text-rose">Book an appointment</p><h2 class="mt-2 font-display text-3xl text-plum">Let’s get you scheduled.</h2></div><p class="text-sm text-ink/45"><span class="text-rose">*</span> Required fields</p></div>
+            <fieldset class="mt-8"><legend class="text-sm font-bold text-plum">01 <span class="ml-3 font-normal text-ink/60">Choose your service</span></legend><div class="mt-4 grid gap-3 sm:grid-cols-3"><label class="service-card"><input class="sr-only" type="radio" name="service" value="Cut & style" data-price="85" checked /><span class="block font-semibold text-plum">Cut & style</span><span class="mt-1 block text-xs text-ink/50">60 min · $85</span></label><label class="service-card"><input class="sr-only" type="radio" name="service" value="Color refresh" data-price="145" /><span class="block font-semibold text-plum">Color refresh</span><span class="mt-1 block text-xs text-ink/50">90 min · $145</span></label><label class="service-card"><input class="sr-only" type="radio" name="service" value="Full transformation" data-price="220" /><span class="block font-semibold text-plum">Full transformation</span><span class="mt-1 block text-xs text-ink/50">150 min · $220</span></label></div></fieldset>
+            <fieldset class="mt-9"><legend class="text-sm font-bold text-plum">02 <span class="ml-3 font-normal text-ink/60">Pick a date & time</span></legend><div class="mt-4 grid gap-4 sm:grid-cols-2"><label class="field-wrap"><span>Date <b>*</b></span><input id="date" type="date" required /></label><label class="field-wrap"><span>Time <b>*</b></span><select id="time" required><option value="">Select a time</option><option>9:00 AM</option><option>10:30 AM</option><option>12:00 PM</option><option>1:30 PM</option><option>3:00 PM</option><option>4:30 PM</option></select></label></div></fieldset>
+            <fieldset class="mt-9"><legend class="text-sm font-bold text-plum">03 <span class="ml-3 font-normal text-ink/60">Tell us about you</span></legend><div class="mt-4 grid gap-4 sm:grid-cols-2"><label class="field-wrap"><span>First name <b>*</b></span><input id="first-name" type="text" autocomplete="given-name" placeholder="Alex" required /></label><label class="field-wrap"><span>Last name <b>*</b></span><input id="last-name" type="text" autocomplete="family-name" placeholder="Morgan" required /></label><label class="field-wrap"><span>Email address <b>*</b></span><input id="email" type="email" autocomplete="email" placeholder="alex@email.com" required /></label><label class="field-wrap"><span>Phone number</span><input type="tel" autocomplete="tel" placeholder="(212) 555-0148" /></label></div><label class="field-wrap mt-4"><span>Anything we should know?</span><textarea rows="3" placeholder="Share any notes or requests before your visit..."></textarea></label></fieldset>
+            <div class="mt-8 flex flex-col items-start justify-between gap-5 border-t border-plum/10 pt-7 sm:flex-row sm:items-center"><p class="text-xs leading-5 text-ink/50">By booking, you agree to our 24-hour cancellation policy.</p><button class="rounded-full bg-plum px-7 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-rose" type="submit">Request appointment <span class="ml-2">→</span></button></div><div id="success" class="mt-5 hidden rounded-xl bg-sage/15 px-5 py-4 text-sm font-medium text-plum" role="status"></div>
+          </form>
+          <aside class="lg:pt-9"><div class="sticky top-6 rounded-[1.75rem] border border-plum/10 bg-paper p-7"><p class="text-xs font-bold uppercase tracking-[.2em] text-rose">Your visit</p><div class="mt-6 space-y-5 text-sm"><div class="flex justify-between gap-4"><span class="text-ink/50">Service</span><span id="summary-service" class="text-right font-semibold text-plum">Cut & style</span></div><div class="flex justify-between gap-4"><span class="text-ink/50">Date</span><span id="summary-date" class="text-right font-semibold text-plum">Choose a date</span></div><div class="flex justify-between gap-4"><span class="text-ink/50">Time</span><span id="summary-time" class="text-right font-semibold text-plum">Choose a time</span></div></div><div class="my-6 h-px bg-plum/10"></div><div class="flex items-center justify-between"><span class="text-ink/50">Starting at</span><span id="summary-price" class="font-display text-2xl text-plum">$85</span></div><p class="mt-7 text-xs leading-5 text-ink/45">No payment is required today. We’ll confirm your appointment by email within one business day.</p></div><div id="details" class="mt-7 px-2 text-sm leading-6 text-ink/60"><p class="font-semibold text-plum">Miro Salon</p><p>184 Mercer Street<br />New York, NY 10012</p><p class="mt-3">Tue–Sat · 9am–6pm</p></div></aside>
         </div>
       </section>
     </main>
-
-    <footer class="bg-ink px-6 pb-8 text-sm text-slate-500 lg:px-8">
-      <div class="mx-auto flex max-w-6xl justify-between border-t border-white/10 pt-6">
-        <span>© 2026 Studio.</span>
-        <span>Built with Tailwind CSS.</span>
-      </div>
-    </footer>
+    <footer class="mx-auto flex max-w-7xl flex-col justify-between gap-3 px-6 py-8 text-xs text-ink/45 sm:flex-row lg:px-10"><span>© 2026 Miro Salon</span><span>Made for your next good hair day.</span></footer>
+    <script>
+      const form = document.querySelector('#booking-form'); const dateInput = document.querySelector('#date'); const timeInput = document.querySelector('#time'); const services = document.querySelectorAll('input[name="service"]'); const summary = { service: document.querySelector('#summary-service'), price: document.querySelector('#summary-price'), date: document.querySelector('#summary-date'), time: document.querySelector('#summary-time') }; const today = new Date(); today.setDate(today.getDate() + 1); dateInput.min = today.toISOString().split('T')[0];
+      const updateSummary = () => { const selected = document.querySelector('input[name="service"]:checked'); summary.service.textContent = selected.value; summary.price.textContent = '$' + selected.dataset.price; summary.date.textContent = dateInput.value ? new Date(dateInput.value + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Choose a date'; summary.time.textContent = timeInput.value || 'Choose a time'; };
+      services.forEach((item) => item.addEventListener('change', updateSummary)); dateInput.addEventListener('change', updateSummary); timeInput.addEventListener('change', updateSummary);
+      form.addEventListener('submit', (event) => { event.preventDefault(); if (!form.checkValidity()) { form.reportValidity(); return; } const firstName = document.querySelector('#first-name').value.trim(); const success = document.querySelector('#success'); success.textContent = `Thanks, ${firstName}! Your request is in. We’ll email you shortly to confirm the details.`; success.classList.remove('hidden'); success.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+    </script>
   </body>
 </html>
