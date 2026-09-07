@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Book your next appointment at Miro Salon." />
+    <meta name="description" content="Book your next appointment at Gladys Studio Cosmetology." />
     <title>Book an appointment · Miro Salon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = { theme: { extend: { colors: { ink: '#241d26', plum: '#513443', rose: '#b87479', blush: '#f4e9e4', paper: '#fcfaf8', sage: '#8b9b8a' }, fontFamily: { display: ['Georgia', 'ui-serif', 'serif'] }, boxShadow: { soft: '0 18px 55px rgba(81, 52, 67, .12)' } } };
+      tailwind.config = { theme: { extend: { colors: { ink: '#171717', plum: '#111111', rose: '#c69a3b', blush: '#f5f0e6', paper: '#fffdf8', sage: '#8d805e' }, fontFamily: { display: ['Georgia', 'ui-serif', 'serif'] }, boxShadow: { soft: '0 18px 55px rgba(17, 17, 17, .12)' } } } };
     </script>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body class="bg-paper text-ink antialiased">
     <header class="border-b border-plum/10 bg-paper/90 backdrop-blur">
       <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10" aria-label="Main navigation">
-        <a href="#top" class="font-display text-2xl tracking-tight">miro<span class="text-rose">.</span></a>
-        <div class="hidden items-center gap-8 text-sm font-medium text-ink/65 sm:flex"><a class="transition hover:text-rose" href="#booking">Book online</a><a class="transition hover:text-rose" href="#details">Visit us</a></div>
+        <a href="#top" class="brand-lockup" aria-label="Gladys Studio home"><span class="brand-mark"><span>G</span><span>S</span></span><span class="brand-name">GLADYS STUDIO</span></a>
+        <div class="hidden items-center gap-8 text-sm font-medium text-ink/65 sm:flex"><a class="transition hover:text-rose" href="#portfolio">Portfolio</a><a class="transition hover:text-rose" href="#booking">Book online</a><a class="transition hover:text-rose" href="#details">Visit us</a></div>
         <a href="tel:+12125550148" class="flex items-center gap-2 text-sm font-semibold text-plum"><span class="grid h-8 w-8 place-items-center rounded-full bg-blush text-xs">✦</span>(212) 555-0148</a>
       </nav>
     </header>
@@ -24,9 +24,26 @@
         <div><p class="mb-5 text-xs font-bold uppercase tracking-[.24em] text-rose">Your time, beautifully spent</p><h1 class="max-w-xl font-display text-5xl leading-[1.02] tracking-[-.03em] text-plum sm:text-6xl lg:text-7xl">Make time for <em class="font-normal text-rose">you.</em></h1><p class="mt-7 max-w-md text-base leading-7 text-ink/65">A calm space for effortless color, thoughtful cuts, and a little more confidence. Choose a time that works for you.</p><div class="mt-8 flex items-center gap-3 text-sm text-ink/60"><span class="h-2 w-2 rounded-full bg-sage"></span> New York · By appointment</div></div>
         <div class="relative overflow-hidden rounded-[2rem] bg-plum px-7 py-8 text-paper shadow-soft sm:px-10"><div class="absolute -right-10 -top-16 h-48 w-48 rounded-full border border-white/10"></div><div class="absolute -bottom-24 right-16 h-48 w-48 rounded-full border border-white/10"></div><div class="relative flex items-start justify-between gap-6"><div><p class="text-xs font-bold uppercase tracking-[.2em] text-rose/90">Miro salon</p><p class="mt-4 max-w-sm font-display text-3xl leading-tight sm:text-4xl">Your next good hair day starts here.</p></div><span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-white/15 text-xl text-rose">✦</span></div><div class="relative mt-10 flex items-center gap-5 text-sm text-paper/65"><span class="h-px w-12 bg-rose"></span><span>01 — 03</span><span class="h-px flex-1 bg-white/15"></span></div></div>
       </section>
+      <section id="portfolio" class="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[.24em] text-rose">A little inspiration</p>
+            <h2 class="mt-3 max-w-xl font-display text-4xl leading-tight tracking-[-.02em] text-plum sm:text-5xl">Hair that feels like <em class="font-normal text-rose">you.</em></h2>
+          </div>
+          <a class="inline-flex items-center gap-2 text-sm font-bold text-plum transition hover:text-rose" href="https://www.instagram.com/gladyshairstyler/" target="_blank" rel="noreferrer">See more on Instagram <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="portfolio-grid mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <figure class="portfolio-card portfolio-card-tall group"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=85" alt="Glossy, softly styled brunette hair" loading="lazy" /><figcaption><span>Gloss + movement</span><span class="portfolio-arrow">↗</span></figcaption></figure>
+          <figure class="portfolio-card group"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a6345?auto=format&fit=crop&w=900&q=85" alt="Freshly cut hair with natural texture" loading="lazy" /><figcaption><span>Soft layers</span><span class="portfolio-arrow">↗</span></figcaption></figure>
+          <figure class="portfolio-card portfolio-card-tall group"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=900&q=85" alt="Warm dimensional hair color" loading="lazy" /><figcaption><span>Dimensional color</span><span class="portfolio-arrow">↗</span></figcaption></figure>
+          <figure class="portfolio-card group"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=85" alt="Polished hair styled for an occasion" loading="lazy" /><figcaption><span>Event-ready</span><span class="portfolio-arrow">↗</span></figcaption></figure>
+        </div>
+        <p class="mt-5 text-xs leading-5 text-ink/45">A selection of looks to start the conversation. Bring a screenshot, save a look, or tell us what you’re dreaming about.</p>
+      </section>
       <section id="booking" class="border-y border-plum/10 bg-blush/45">
         <div class="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1fr_320px] lg:px-10 lg:py-16">
           <form id="booking-form" class="rounded-[1.75rem] bg-paper p-6 shadow-soft sm:p-9" novalidate>
+            <div class="deposit-notice"><span class="deposit-icon">$</span><div><p class="font-bold text-plum">$25 minimum deposit required</p><p class="mt-1 text-xs leading-5 text-ink/55">Your deposit holds your appointment time and is applied toward your service total.</p></div></div>
             <div class="flex flex-col justify-between gap-3 border-b border-plum/10 pb-7 sm:flex-row sm:items-end"><div><p class="text-xs font-bold uppercase tracking-[.2em] text-rose">Book an appointment</p><h2 class="mt-2 font-display text-3xl text-plum">Let’s get you scheduled.</h2></div><p class="text-sm text-ink/45"><span class="text-rose">*</span> Required fields</p></div>
             <fieldset class="mt-8"><legend class="text-sm font-bold text-plum">01 <span class="ml-3 font-normal text-ink/60">Choose your service</span></legend><div class="mt-4 grid gap-3 sm:grid-cols-3"><label class="service-card"><input class="sr-only" type="radio" name="service" value="Cut & style" data-price="85" checked /><span class="block font-semibold text-plum">Cut & style</span><span class="mt-1 block text-xs text-ink/50">60 min · $85</span></label><label class="service-card"><input class="sr-only" type="radio" name="service" value="Color refresh" data-price="145" /><span class="block font-semibold text-plum">Color refresh</span><span class="mt-1 block text-xs text-ink/50">90 min · $145</span></label><label class="service-card"><input class="sr-only" type="radio" name="service" value="Full transformation" data-price="220" /><span class="block font-semibold text-plum">Full transformation</span><span class="mt-1 block text-xs text-ink/50">150 min · $220</span></label></div></fieldset>
             <fieldset class="mt-9"><legend class="text-sm font-bold text-plum">02 <span class="ml-3 font-normal text-ink/60">Pick a date & time</span></legend><div class="mt-4 grid gap-4 sm:grid-cols-2"><label class="field-wrap"><span>Date <b>*</b></span><input id="date" type="date" required /></label><label class="field-wrap"><span>Time <b>*</b></span><select id="time" required><option value="">Select a time</option><option>9:00 AM</option><option>10:30 AM</option><option>12:00 PM</option><option>1:30 PM</option><option>3:00 PM</option><option>4:30 PM</option></select></label></div></fieldset>
@@ -43,6 +60,15 @@
       const updateSummary = () => { const selected = document.querySelector('input[name="service"]:checked'); summary.service.textContent = selected.value; summary.price.textContent = '$' + selected.dataset.price; summary.date.textContent = dateInput.value ? new Date(dateInput.value + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Choose a date'; summary.time.textContent = timeInput.value || 'Choose a time'; };
       services.forEach((item) => item.addEventListener('change', updateSummary)); dateInput.addEventListener('change', updateSummary); timeInput.addEventListener('change', updateSummary);
       form.addEventListener('submit', (event) => { event.preventDefault(); if (!form.checkValidity()) { form.reportValidity(); return; } const firstName = document.querySelector('#first-name').value.trim(); const success = document.querySelector('#success'); success.textContent = `Thanks, ${firstName}! Your request is in. We’ll email you shortly to confirm the details.`; success.classList.remove('hidden'); success.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+    </script>
+    <script>
+      document.querySelectorAll('p, span').forEach((element) => { element.textContent = element.textContent.replace(/Miro Salon|Miro salon/g, 'Gladys Studio Cosmetology').replace('Your next good hair day starts here.', 'Your next beautiful transformation starts here.'); });
+      document.title = 'Book an appointment · Gladys Studio';
+      document.querySelector('footer span').textContent = '© 2026 Gladys Studio Cosmetology';
+      document.querySelector('footer span:last-child').textContent = 'Made for your next beautiful transformation.';
+    </script>
+    <script>
+      document.querySelectorAll('p').forEach((element) => { if (element.textContent.includes('No payment is required today')) element.textContent = 'A $25 minimum deposit is required to secure your appointment. We’ll send payment instructions by email within one business day.'; });
     </script>
   </body>
 </html>
