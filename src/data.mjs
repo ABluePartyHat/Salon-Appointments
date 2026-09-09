@@ -7,7 +7,7 @@ export const business = {
   locationConfirmed: false, contactConfirmed: false,
   hours: [['Tuesday – Friday', '9:00 am – 6:00 pm'], ['Saturday', '9:00 am – 5:00 pm'], ['Sunday – Monday', 'Closed']],
   deposit: 25, cancellationHours: 24,
-  origin: 'https://gladys-cosmetology-studio.tender-teal-1558.chatgpt.site',
+  origin: 'https://gladys-cosmetology-studio.rapino.chatgpt.site',
   bookingProviderUrl: '',
 };
 export const services = [
