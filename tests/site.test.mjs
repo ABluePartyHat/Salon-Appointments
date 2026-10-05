@@ -3,8 +3,20 @@ import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { portfolio, categories } from '../src/data.mjs';
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
 const names = ['index', 'services', 'portfolio', 'about', 'new-clients', 'contact', 'book'];
+
+test('portfolio uses every supplied local image with complete metadata', async () => {
+  assert.equal(portfolio.length, 13);
+  assert.equal(new Set(portfolio.map(item => item.image)).size, portfolio.length);
+  for (const item of portfolio) {
+    assert.match(item.image, /^\.\/assets\/portfolio\/[a-z0-9-]+\.jpg$/);
+    assert.ok(item.title && item.alt && item.category && item.categories.length);
+    await access(path.resolve(root, item.image));
+  }
+  for (const category of categories.filter(category => category !== 'All')) assert.ok(portfolio.some(item => item.categories.includes(category)), `${category} filter is empty`);
+});
 
 for (const name of names) test(`${name}: complete static page, valid links, unique IDs and SEO`, async () => {
   const html = await readFile(path.join(root, `${name}.html`), 'utf8');

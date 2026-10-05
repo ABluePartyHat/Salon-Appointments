@@ -1,4 +1,4 @@
-import { mkdir, writeFile, copyFile } from 'node:fs/promises';
+import { mkdir, writeFile, copyFile, cp } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { business, pageMeta, services } from '../src/data.mjs';
@@ -31,6 +31,7 @@ for (const [page, render] of Object.entries(pages)) {
 await mkdir(path.join(dist, 'src'), { recursive: true });
 for (const name of ['client.js', 'data.mjs', 'booking-provider.mjs']) await copyFile(path.join(root, 'src', name), path.join(dist, 'src', name));
 for (const name of ['styles.css', 'favicon.svg']) await copyFile(path.join(root, name), path.join(dist, name));
+await cp(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true });
 const urls = Object.keys(pages).filter(p => p !== 'book').map(p => `${business.origin}/${p === 'home' ? '' : `${p}.html`}`);
 await writeFile(path.join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(url => `<url><loc>${url}</loc></url>`).join('')}</urlset>\n`);
 await writeFile(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${business.origin}/sitemap.xml\n`);

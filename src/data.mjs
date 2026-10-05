@@ -9,6 +9,7 @@ export const business = {
   deposit: 25, cancellationHours: 24,
   origin: 'https://gladys-cosmetology-studio.rapino.chatgpt.site',
   bookingProviderUrl: '',
+  bookingApiBaseUrl: '/api',
 };
 export const services = [
   { id: 'balayage', name: 'Signature Balayage', shortName: 'Balayage', price: 180, duration: '2.5–3.5 hours', minutes: 210, category: 'Color', description: 'Soft ribbons of light, painted just for you. Effortless dimension that grows out beautifully.', includes: 'Personal consultation, custom hand-painted color, toner, wash, and signature blow-dry.', addons: 'Bond-building treatment +$30 · Haircut +$45', featured: true },
@@ -19,15 +20,22 @@ export const services = [
   { id: 'styling', name: 'The Finishing Touch', shortName: 'Styling', price: 55, duration: '45–60 minutes', minutes: 60, category: 'Cut & style', description: 'From softly sculpted waves to an occasion-worthy finish. A little extra beautiful.', includes: 'Shampoo, blow-dry, and hot-tool styling.', addons: 'Special occasion updo from +$40' },
   { id: 'consultation', name: 'Let’s Talk Hair', shortName: 'Consultation', price: 25, duration: '30 minutes', minutes: 30, category: 'Consultation', description: 'A thoughtful conversation about your hair history, inspiration, and what is possible. Required for extensions and color corrections.', includes: 'Hair and scalp assessment, strand test if needed, personalized service plan, and estimate.', addons: 'Consultation fee credited toward a booked service' },
 ];
-export const categories = ['All', 'Color', 'Highlights', 'Balayage', 'Cuts', 'Extensions', 'Styling'];
+export const categories = ['All', 'Haircuts', 'Color', 'Highlights & Balayage', 'Styling', 'Updos'];
 const photo = (id) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&fit=crop`;
 export const portfolio = [
-  { id: 'lived-in', title: 'Lived-in dimension', category: 'Balayage', image: photo('13543276'), alt: 'Inspiration: long brunette waves with softly blended dimension, seen from behind', position: 'center 40%', tall: true },
-  { id: 'golden-hour', title: 'Golden-hour blonde', category: 'Highlights', image: photo('9489719'), alt: 'Inspiration: flowing blonde waves against a white dress', position: 'center 35%' },
-  { id: 'soft-movement', title: 'Softness in every strand', category: 'Cuts', image: photo('9253773'), alt: 'Inspiration: face-framing haircut with natural dark curls', position: 'center 35%', tall: true },
-  { id: 'rich-brunette', title: 'Rich, glossy brunette', category: 'Color', image: photo('38714663'), alt: 'Inspiration: chestnut waves with golden highlights in natural light', position: 'center 40%' },
-  { id: 'length', title: 'A little more length', category: 'Extensions', image: photo('17740207'), alt: 'Length inspiration for an extensions consultation: long wavy brunette hair', position: 'center', tall: true },
-  { id: 'occasion', title: 'An effortless finish', category: 'Styling', image: photo('13788286'), alt: 'Inspiration: long blonde bridal waves with a delicate braided detail', position: 'center 40%' },
+  { id: 'layered-brunette-curls', title: 'Long Brunette Layers & Soft Curls', category: 'Haircuts', categories: ['Haircuts', 'Styling'], image: './assets/portfolio/01-long-layered-cut-soft-curls-dark-brunette.jpg', alt: 'Long layered dark brunette haircut styled with soft curls', position: 'center', tall: false },
+  { id: 'blonde-highlighted-bob', title: 'Blunt Bob & Blonde Highlights', category: 'Haircuts', categories: ['Haircuts', 'Highlights & Balayage'], image: './assets/portfolio/02-blunt-bob-blonde-highlights.jpg', alt: 'Blunt bob haircut with dimensional blonde highlights', position: 'center', tall: true },
+  { id: 'straight-blonde-balayage', title: 'Long Blonde Balayage', category: 'Highlights & Balayage', categories: ['Highlights & Balayage', 'Styling'], image: './assets/portfolio/03-long-straight-blonde-balayage.jpg', alt: 'Long straight hair with softly blended blonde balayage', position: 'center', tall: false },
+  { id: 'highlighted-layers-blowout', title: 'Blonde Layers & Blowout', category: 'Highlights & Balayage', categories: ['Haircuts', 'Highlights & Balayage', 'Styling'], image: './assets/portfolio/04-long-layers-blonde-highlights-blowout.jpg', alt: 'Long layered haircut with blonde highlights and a smooth blowout', position: 'center', tall: false },
+  { id: 'straight-blonde-highlights', title: 'Long Blonde Highlights', category: 'Highlights & Balayage', categories: ['Highlights & Balayage', 'Styling'], image: './assets/portfolio/05-long-straight-blonde-highlights.jpg', alt: 'Long straight hair with bright blonde highlights', position: 'center', tall: false },
+  { id: 'medium-layers-blowout', title: 'Layered Blonde Blowout', category: 'Haircuts', categories: ['Haircuts', 'Styling'], image: './assets/portfolio/06-medium-layered-cut-blonde-blowout.jpg', alt: 'Medium-length layered blonde haircut styled in a polished blowout', position: 'center', tall: false },
+  { id: 'ash-blonde-bob', title: 'Ash Blonde Highlighted Bob', category: 'Highlights & Balayage', categories: ['Haircuts', 'Color', 'Highlights & Balayage'], image: './assets/portfolio/07-blunt-bob-ash-blonde-highlights.jpg', alt: 'Blunt bob haircut with cool ash blonde highlights', position: 'center', tall: true },
+  { id: 'curly-brunette-layers', title: 'Curly Brunette Layers', category: 'Haircuts', categories: ['Haircuts', 'Styling'], image: './assets/portfolio/08-medium-curly-layered-cut-brunette.jpg', alt: 'Medium brunette layered haircut styled with defined curls', position: 'center', tall: false },
+  { id: 'half-up-highlighted-curls', title: 'Half-Up Highlighted Curls', category: 'Updos', categories: ['Highlights & Balayage', 'Styling', 'Updos'], image: './assets/portfolio/09-half-up-curly-style-brunette-highlights.jpg', alt: 'Half-up curly brunette hairstyle with dimensional highlights', position: 'center', tall: true },
+  { id: 'formal-low-bun', title: 'Formal Low Bun', category: 'Updos', categories: ['Styling', 'Updos'], image: './assets/portfolio/10-low-bun-formal-updo.jpg', alt: 'Polished formal low bun updo', position: 'center', tall: true },
+  { id: 'sleek-auburn-color', title: 'Sleek Auburn Color', category: 'Color', categories: ['Color', 'Styling'], image: './assets/portfolio/11-long-sleek-straight-auburn-color.jpg', alt: 'Long sleek straight hair with rich auburn color', position: 'center', tall: false },
+  { id: 'black-layers-loose-curls', title: 'Long Black Layers & Loose Curls', category: 'Haircuts', categories: ['Haircuts', 'Styling'], image: './assets/portfolio/12-long-layered-black-hair-loose-curls.jpg', alt: 'Long layered black haircut styled with loose curls', position: 'center', tall: true },
+  { id: 'platinum-lob-waves', title: 'Platinum Lob & Beach Waves', category: 'Color', categories: ['Haircuts', 'Color', 'Styling'], image: './assets/portfolio/13-platinum-blonde-lob-beach-waves.jpg', alt: 'Platinum blonde lob haircut styled with soft beach waves', position: 'center', tall: true },
 ];
 export const heroImage = photo('13543276');
 export const portraitImage = 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop';

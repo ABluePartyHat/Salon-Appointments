@@ -1,5 +1,5 @@
 import { portfolio, services, business } from './data.mjs';
-import { bookingProvider, bookingWindow, validateDate, formatDate, validateBooking } from './booking-provider.mjs';
+import { bookingProvider, formatDate } from './booking-provider.mjs';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -36,7 +36,7 @@ let visiblePortfolio = [...portfolio];
 $$('[data-filter]').forEach(button => button.addEventListener('click', () => {
   $$('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
   const category = button.dataset.filter;
-  visiblePortfolio = portfolio.filter(p => category === 'All' || p.category === category);
+  visiblePortfolio = portfolio.filter(p => category === 'All' || p.categories.includes(category));
   $$('.gallery-grid [data-lightbox]').forEach(card => { card.hidden = !visiblePortfolio.some(p => p.id === card.dataset.lightbox); });
   $('#gallery-status').textContent = `${visiblePortfolio.length} ${visiblePortfolio.length === 1 ? 'look' : 'looks'}${category === 'All' ? '' : ` in ${category}`}`;
 }));
@@ -46,10 +46,10 @@ if (dialog) {
   let opener;
   function displayPhoto() {
     const item = visiblePortfolio[current];
-    $('#lightbox-image').src = `${item.image}&w=1500&q=85`;
+    $('#lightbox-image').src = /^https?:\/\//.test(item.image) ? `${item.image}&w=1500&q=85` : item.image;
     $('#lightbox-image').alt = item.alt;
     $('#lightbox-title').textContent = item.title;
-    $('#lightbox-category').textContent = `${item.category} · ${current + 1} / ${visiblePortfolio.length}`;
+    $('#lightbox-category').textContent = `${item.categories.join(' · ')} · ${current + 1} / ${visiblePortfolio.length}`;
     $('.lightbox-prev').disabled = visiblePortfolio.length <= 1;
     $('.lightbox-next').disabled = visiblePortfolio.length <= 1;
   }
@@ -92,14 +92,32 @@ $('[data-directions]')?.addEventListener('click', () => {
 const form = $('#booking-form');
 if (form) {
   form.noValidate = true;
+  const demoNote = $('.booking-demo-note', form.parentElement);
+  if (demoNote) demoNote.querySelector('p').textContent = 'Live availability is checked securely against the studio calendar. No Google Calendar interface or private event details are shown.';
+  $('.preview-pill', form)?.replaceChildren(document.createTextNode('LIVE BOOKING · PAYMENT NOT COLLECTED'));
+  $('[data-step="4"] h2', form).textContent = 'Something to look forward to.';
   const panels = $$('[data-step]', form);
   const dateInput = $('#appointment-date');
+  $('.fine-print', panels[1]).textContent = 'Appointments are available Wednesday–Friday, 9:00 AM–6:00 PM, and Saturday, 8:00 AM–6:00 PM.';
   const errorMessage = $('#booking-error');
   const progress = $('.booking-progress');
   const confirmButton = $('[type=submit]', form);
   let step = 0;
   let submitting = false;
-  Object.assign(dateInput, bookingWindow());
+  let loadingAvailability = false;
+  let availableTimesForDate = [];
+  let bookingId = crypto.randomUUID();
+  const today = new Date();
+  dateInput.min = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  dateInput.addEventListener('change', () => {
+    if (!dateInput.value) return;
+    const weekday = new Date(`${dateInput.value}T12:00:00`).getDay();
+    if (![3, 4, 5, 6].includes(weekday)) {
+      dateInput.value = '';
+      errorMessage.textContent = 'Appointments are available Wednesday through Saturday. Please choose another date.';
+      dateInput.focus();
+    }
+  });
   const field = name => form.elements.namedItem(name);
   const value = name => field(name)?.value || '';
   function snapshot() {
@@ -109,6 +127,7 @@ if (form) {
       email: value('email').trim(), phone: value('phone').trim(), notes: value('notes').trim(),
       firstVisit: field('firstVisit').checked, emailReminder: field('emailReminder').checked,
       smsReminder: field('smsReminder').checked, policy: field('policy').checked,
+      bookingId,
     };
   }
   function summary() {
@@ -119,8 +138,9 @@ if (form) {
     $('#summary-duration').textContent = service?.duration || '—';
     $('#summary-price').textContent = service ? `$${service.price}` : '—';
   }
-  function renderTimes() {
-    const times = bookingProvider.getAvailableTimes(value('service'), dateInput.value);
+  async function renderTimes() {
+    const times = await bookingProvider.getAvailableTimes(value('service'), dateInput.value);
+    availableTimesForDate = times;
     const container = $('#time-options');
     container.replaceChildren();
     for (const time of times) {
@@ -129,7 +149,7 @@ if (form) {
       const span = document.createElement('span'); span.textContent = time;
       label.append(radio, span); container.append(label);
     }
-    if (!times.length) { const p = document.createElement('p'); p.textContent = 'No sample times available. Please go back and choose another date.'; container.append(p); }
+    if (!times.length) { const p = document.createElement('p'); p.textContent = 'No appointments are available on this date. Please select another day.'; container.append(p); }
     $('#time-date-label').textContent = dateInput.value ? formatDate(dateInput.value) : 'Sample appointment times';
     summary();
   }
@@ -147,14 +167,11 @@ if (form) {
       progress.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
     }
   }
-  function checkCurrent() {
+  async function checkCurrent() {
     errorMessage.textContent = '';
     if (step === 0 && !value('service')) { errorMessage.textContent = 'Choose a service to continue.'; $('input', panels[0]).focus(); return false; }
-    if (step === 1) {
-      const error = validateDate(dateInput.value);
-      if (error) { errorMessage.textContent = error; dateInput.focus(); return false; }
-    }
-    if (step === 2 && !bookingProvider.getAvailableTimes(value('service'), dateInput.value).includes(value('time'))) {
+    if (step === 1 && !/^\d{4}-\d{2}-\d{2}$/.test(dateInput.value)) { errorMessage.textContent = 'Please choose an appointment date.'; dateInput.focus(); return false; }
+    if (step === 2 && !availableTimesForDate.includes(value('time'))) {
       errorMessage.textContent = 'Please choose an available time.'; $('input', panels[2])?.focus(); return false;
     }
     if (step === 3) {
@@ -162,21 +179,25 @@ if (form) {
         input.value = input.value.trim();
         if (!input.checkValidity() || !input.value) { input.reportValidity(); input.focus(); errorMessage.textContent = 'Please complete your contact details.'; return false; }
       }
-      const contactError = validateBooking({ ...snapshot(), policy: true });
-      if (contactError) { errorMessage.textContent = contactError; return false; }
     }
     return true;
   }
-  function nextStep() {
-    if (!checkCurrent()) return;
-    if (step === 1) renderTimes();
+  async function nextStep() {
+    if (loadingAvailability) return;
+    if (!(await checkCurrent())) return;
+    if (step === 1) {
+      loadingAvailability = true;
+      errorMessage.textContent = 'Checking availability…';
+      try { await renderTimes(); } catch (error) { errorMessage.textContent = error.message; return; } finally { loadingAvailability = false; }
+    }
     showStep(Math.min(4, step + 1));
   }
-  $$('.next-step', form).forEach(button => button.addEventListener('click', nextStep));
+  $$('.next-step', form).forEach(button => button.addEventListener('click', () => { void nextStep(); }));
   $$('.prev-step', form).forEach(button => button.addEventListener('click', () => showStep(Math.max(0, step - 1))));
   form.addEventListener('change', event => {
     if (event.target.name === 'service' || event.target.name === 'date') {
       $('#time-options').replaceChildren();
+      availableTimesForDate = [];
       field('policy').checked = false;
     }
     errorMessage.textContent = '';
@@ -189,26 +210,31 @@ if (form) {
   showStep(selectedInput ? 1 : 0, false);
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (step < 4) { nextStep(); return; }
+    if (step < 4) { void nextStep(); return; }
     if (submitting) return;
     const booking = snapshot();
-    const error = validateBooking(booking);
-    if (error) { errorMessage.textContent = error; if (!booking.policy) field('policy').focus(); return; }
+    if (!booking.policy) { errorMessage.textContent = 'Please acknowledge the booking policies.'; field('policy').focus(); return; }
     submitting = true; confirmButton.disabled = true;
     try {
       await bookingProvider.confirm(booking);
-      $('#confirmation-message').textContent = `Thank you, ${booking.firstName}. Here’s the visit you explored with Gladys.`;
+      $('#confirmation-message').textContent = `Thank you, ${booking.firstName}. Your appointment is confirmed.`;
       const service = services.find(s => s.id === booking.service);
       $('#confirmation-details').textContent = `${service.name} · ${formatDate(booking.date)} · ${booking.time} · Starting at $${service.price}`;
       form.hidden = true; progress.hidden = true;
       const confirmation = $('#booking-confirmation'); confirmation.hidden = false; confirmation.focus();
       confirmation.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'center' });
-    } catch (error) { errorMessage.textContent = error.message || 'Something went wrong. Please try again.'; }
+    } catch (error) {
+      if (error.code === 'SLOT_UNAVAILABLE') {
+        try { await renderTimes(); } catch { availableTimesForDate = []; }
+        showStep(2);
+        errorMessage.textContent = error.message || 'That appointment time is no longer available. Please select another time.';
+      } else errorMessage.textContent = error.message || 'Something went wrong. Please try again.';
+    }
     finally { submitting = false; confirmButton.disabled = false; }
   });
   $('#restart-booking').addEventListener('click', () => {
-    form.reset(); $('#time-options').replaceChildren(); $('#booking-confirmation').hidden = true;
+    form.reset(); $('#time-options').replaceChildren(); availableTimesForDate = []; bookingId = crypto.randomUUID(); $('#booking-confirmation').hidden = true;
     $('#confirmation-message').textContent = ''; $('#confirmation-details').textContent = '';
-    form.hidden = false; progress.hidden = false; Object.assign(dateInput, bookingWindow()); showStep(0);
+    form.hidden = false; progress.hidden = false; dateInput.value = ''; showStep(0);
   });
 }

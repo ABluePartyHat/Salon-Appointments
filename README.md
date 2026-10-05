@@ -41,12 +41,22 @@ HairSalon JSON-LD intentionally omits unconfirmed address, contact information, 
 
 ## Photography sources
 
-All photos are labeled inspiration or placeholders; they do not represent Gladys's work or endorsements. Pexels images are offered under the [Pexels License](https://www.pexels.com/license/).
+The portfolio uses Gladys's supplied original client-work photographs from `assets/portfolio/`. Remaining non-portfolio placeholders are limited to the hero and stylist portrait:
 
 - [Mathilde Langevin — brunette hair / hero](https://www.pexels.com/photo/back-view-of-woman-with-brown-hair-13543276/)
-- [Ron Lach — blonde waves](https://www.pexels.com/photo/back-view-of-a-woman-s-hair-9489719/)
-- [Ron Lach — natural curls](https://www.pexels.com/photo/close-up-photo-of-woman-with-curly-hair-9253773/)
-- [daria — chestnut waves](https://www.pexels.com/photo/elegant-long-wavy-hair-in-natural-light-38714663/)
-- [Biola Visuals — long hair](https://www.pexels.com/photo/back-view-of-a-woman-with-long-wavy-hair-17740207/)
-- [Rene Terp — occasion styling](https://www.pexels.com/photo/back-view-of-woman-with-wavy-blonde-hair-13788286/)
 - Portrait placeholder retained from the original site's [Unsplash image](https://images.unsplash.com/photo-1487412720507-e7ab37603c6f).
+
+## Live Google Calendar booking
+
+The frontend now calls a separate backend at `/api`. It never calls Google APIs directly and receives only sanitized available time labels. The backend uses Google Calendar FreeBusy for availability and rechecks the selected slot immediately before inserting a Calendar event. The old Google Calendar booking-page link is not used; customers remain in the site's booking UI.
+
+Google Calendar's supported API does not expose the rules configured for a Calendar Appointment Schedule. The public `calendar.app.google` page is therefore not queried or scraped. `BOOKING_SCHEDULE_JSON` is the one server-side source of truth and should mirror the Appointment Schedule manually. The deployable backend is in `api/` and is intended for Google Cloud Functions/Cloud Run. Set these backend environment variables:
+
+- `GOOGLE_CALENDAR_ID` — the calendar to read and write.
+- `BOOKING_SCHEDULE_JSON` — timezone, service durations, slot interval, before/after buffers, minimum notice, maximum booking window, closed weekdays, unavailable dates, weekly availability, and date-specific overrides. See `api/.env.example`. Weekly days use `0` for Sunday through `6` for Saturday. Each day may contain multiple `["HH:mm","HH:mm"]` windows. A date override replaces that day's weekly windows; an empty override closes the date.
+- `ALLOWED_ORIGIN` — the exact website origin in production.
+- `GOOGLE_SHEET_ID` and `GOOGLE_SHEET_RANGE` — optional; if configured, confirmed bookings are appended to the sheet after the Calendar event is created. A Sheets failure never retries or duplicates the Calendar event.
+
+Google Cloud setup: enable Calendar API, Sheets API, and Firestore API; deploy the backend with a dedicated service account using Application Default Credentials; share the target Calendar with that service account with permission to see free/busy and create events; grant the service account access to the Sheet if Sheets sync is enabled; configure the static host's `/api` route or `bookingApiBaseUrl` to point to the backend; and deploy with HTTPS. Do not put service-account JSON, private keys, OAuth tokens, Calendar IDs intended to be private, or Sheets credentials in `src/` or `dist/`.
+
+Firestore is used as a short-lived per-slot lock when `GOOGLE_CLOUD_PROJECT` is available, preventing duplicate concurrent bookings across backend instances. The backend also uses a deterministic booking ID/event ID so safe client retries return the existing confirmation instead of creating another event. Configure Firestore TTL cleanup for the `bookingLocks` collection if desired.

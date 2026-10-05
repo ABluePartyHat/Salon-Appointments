@@ -1,0 +1,13 @@
+{
+  "name": "gladys-booking-api",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "functions-framework --target=api", "test": "node --test *.test.mjs" },
+  "dependencies": {
+    "@google-cloud/firestore": "^7.11.0",
+    "@google-cloud/functions-framework": "^3.4.5",
+    "googleapis": "^144.0.0",
+    "luxon": "^3.6.1"
+  }
+}
