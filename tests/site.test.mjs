@@ -42,12 +42,23 @@ for (const name of names) test(`${name}: complete static page, valid links, uniq
 
 test('booking page uses only the Phase 3 Worker API and keeps Pending approval explicit', async () => {
   const html = await readFile(path.join(root, 'book.html'), 'utf8');
+  const styles = await readFile(path.join(root, 'styles.css'), 'utf8');
   const client = await readFile(path.join(root, 'src', 'booking-ui.js'), 'utf8');
   const provider = await readFile(path.join(root, 'src', 'booking-provider.mjs'), 'utf8');
-  const flow = await readFile(path.join(root, 'src', 'booking-flow.js'), 'utf8');
+  const flow = await readFile(path.join(root, 'src', 'booking-flow-v2.js'), 'utf8');
   const data = await readFile(path.join(root, 'src', 'data.mjs'), 'utf8');
   assert.match(html, /name="services"/);
   assert.match(html, /name="hairLength"/);
+  assert.match(html, /data-step="0"[\s\S]*name="hairLength"[\s\S]*name="services"[\s\S]*Review Estimate/);
+  assert.equal((html.match(/class="booking-panel" data-step=/g) || []).length, 4);
+  assert.ok(html.indexOf('01 / YOUR HAIR &amp; SERVICES') < html.indexOf('02 / YOUR ESTIMATE'));
+  for (const [label, id] of [['Hair length', 'review-length'], ['Services', 'review-services'], ['Estimated duration', 'review-duration'], ['Estimated price', 'review-price']]) {
+    assert.match(html, new RegExp(`<div class="estimate-field"><dt>${label}</dt><dd id="${id}">`));
+  }
+  assert.match(styles, /estimate-summary-grid\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+  assert.match(styles, /estimate-field\{display:flex;[^}]*flex-direction:column;[^}]*align-items:flex-start/);
+  assert.match(html, /id="continue-to-details"[^>]*disabled/);
+  assert.match(html, /id="booking-loading-overlay"[^>]*hidden[^>]*role="status"/);
   assert.match(html, /Request Received — Pending Approval/);
   assert.match(html, /not a confirmed appointment/i);
   assert.match(html, /id="submit-booking"[^>]*disabled/);

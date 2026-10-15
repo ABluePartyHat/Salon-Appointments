@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:local-booking-test": "node scripts/build-local-booking-test.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "start:local-booking-test": "node scripts/serve-local-booking-test.mjs",
+    "test:local-booking": "node scripts/build-local-booking-test.mjs && node --test local-tests/*.test.mjs",
     "start": "node scripts/serve.mjs",
     "test": "node --test tests/*.test.mjs"
   },

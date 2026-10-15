@@ -1,3 +1,5 @@
+import { formatDurationRange } from './duration.mjs';
+
 // Replace sample content here before accepting real appointments.
 export const business = {
   name: 'Gladys Cosmetology Studio', stylist: 'Gladys Brito',
@@ -32,7 +34,7 @@ export const services = [
 ];
 for (const service of services) {
   const [minimum, maximum] = service.durations.short;
-  service.duration = `${minimum}–${maximum} minutes estimated`;
+  service.duration = `${formatDurationRange([minimum, maximum])} estimated`;
 }
 export const categories = ['All', 'Haircuts', 'Color', 'Highlights & Balayage', 'Styling', 'Updos'];
 const photo = (id) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&fit=crop`;

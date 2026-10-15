@@ -13,7 +13,8 @@ import {
 } from '../src/booking-provider.mjs';
 import { services } from '../src/data.mjs';
 import { bookingLaunch } from '../src/data.mjs';
-import { retainedAvailableTime } from '../src/booking-flow.js';
+import { LatestAvailabilityRequest, retainedAvailableTime } from '../src/booking-flow-v2.js';
+import { formatDurationMinutes, formatDurationRange } from '../src/duration.mjs';
 
 test('booking display helpers format local dates and times', () => {
   assert.equal(localDate(new Date(2026, 0, 2)), '2026-01-02');
@@ -84,6 +85,26 @@ test('availability changes retain only a time returned by the latest response', 
   const latest = [{ value: '09:30', label: '9:30 AM' }, { value: '18:00', label: '6:00 PM' }];
   assert.equal(retainedAvailableTime('09:30', latest), '09:30');
   assert.equal(retainedAvailableTime('09:00', latest), '');
+});
+
+test('outdated availability responses cannot replace the latest request', () => {
+  const requests = new LatestAvailabilityRequest();
+  const first = requests.begin();
+  const second = requests.begin();
+  assert.equal(requests.isCurrent(first), false);
+  assert.equal(requests.isCurrent(second), true);
+  requests.invalidate();
+  assert.equal(requests.isCurrent(second), false);
+});
+
+test('appointment durations use human-readable hours and minutes', () => {
+  assert.equal(formatDurationMinutes(30), '30 min');
+  assert.equal(formatDurationMinutes(45), '45 min');
+  assert.equal(formatDurationMinutes(60), '1h');
+  assert.equal(formatDurationMinutes(90), '1h 30m');
+  assert.equal(formatDurationMinutes(120), '2h');
+  assert.equal(formatDurationRange([135, 180]), '2h 15m – 3h');
+  assert.equal(formatDurationRange([180, 240]), '3h – 4h');
 });
 
 test('the source-controlled launch gate defaults to submissions disabled', () => {

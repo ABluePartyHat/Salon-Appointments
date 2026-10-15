@@ -1,4 +1,4 @@
-export { initBooking } from './booking-flow.js';
+export { initBooking } from './booking-flow-v2.js';
 import { services } from './data.mjs';
 import { bookingProvider, formatDate } from './booking-provider.mjs';
 

@@ -44,6 +44,19 @@ Public form submission is disabled in source while the live integration is revie
 
 After a successful controlled test and explicit approval, change `bookingLaunch.submissionsEnabled` in `src/data.mjs` from `false` to `true`, then run `npm run build` and `npm test` before publishing. This client-side gate is a release control, not a security boundary: the public Worker endpoint can still be called directly unless equivalent server-side restrictions are configured.
 
+### Local-only booking test
+
+The committed production gate stays `false`. To create a separate, ignored test artifact that uses the real booking UI and Worker transport:
+
+```sh
+npm run test:local-booking
+npm run start:local-booking-test
+```
+
+The start command regenerates the local artifact from the latest source, then keeps a server running at `http://127.0.0.1:4174/book.html` until you press Ctrl+C. The page is labeled **LOCAL DEVELOPMENT TEST** and is served only on loopback with `no-store` and `noindex` headers. Its copied `data.mjs` enables submission without modifying production source, root HTML, or `dist/`. If port 4174 is already occupied or the local build fails, startup exits with a clear error instead of serving stale files.
+
+First use the form only through the availability step to verify that the real browser origin is accepted. Do not submit unless the booking is explicitly intended as a live, clearly labeled test. No build step or automated test sends a booking request.
+
 ## Before opening live booking
 
 1. Replace inspiration photographs with Gladys's own portfolio, professional portrait, and genuine before/after pairs. The current slider is deliberately labeled as a same-photo visual demonstration.

@@ -1,6 +1,6 @@
 import { business, services, portfolio, categories, testimonials, heroImage, portraitImage } from './data.mjs';
 import { esc, arrow, link, eyebrow, image, sectionHeading, portfolioCard, serviceCard, finalCta, faqList, lightbox } from './components.mjs';
-import { bookingPage as safeBookingPage } from './booking-page.mjs';
+import { bookingPage as safeBookingPage } from './booking-page-v2.mjs';
 
 const priceLabel = price => Number.isInteger(price) ? `${price}` : `${price.toFixed(2)}`;
 

@@ -1,4 +1,5 @@
 dist/
+.local-booking-test/
 node_modules/
 *.tgz
 *.tar.gz
