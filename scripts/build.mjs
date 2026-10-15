@@ -29,7 +29,7 @@ for (const [page, render] of Object.entries(pages)) {
   await writeFile(path.join(dist, filename), html, 'utf8');
 }
 await mkdir(path.join(dist, 'src'), { recursive: true });
-for (const name of ['client.js', 'data.mjs', 'booking-provider.mjs']) await copyFile(path.join(root, 'src', name), path.join(dist, 'src', name));
+for (const name of ['client.js', 'data.mjs', 'booking-provider.mjs', 'booking-ui.js', 'booking-flow.js']) await copyFile(path.join(root, 'src', name), path.join(dist, 'src', name));
 for (const name of ['styles.css', 'favicon.svg']) await copyFile(path.join(root, name), path.join(dist, name));
 await cp(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true });
 const urls = Object.keys(pages).filter(p => p !== 'book').map(p => `${business.origin}/${p === 'home' ? '' : `${p}.html`}`);
