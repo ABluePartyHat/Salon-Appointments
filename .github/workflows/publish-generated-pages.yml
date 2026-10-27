@@ -1,0 +1,33 @@
+name: Publish generated static pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-generated-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build production HTML from source
+        run: npm run build
+      - name: Commit generated HTML to the Pages publishing branch
+        run: |
+          git add -- index.html services.html portfolio.html about.html new-clients.html contact.html book.html
+          if git diff --cached --quiet; then
+            echo "Published HTML already matches source."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "build: sync generated pages with current source [skip ci]"
+          git push origin HEAD:main
