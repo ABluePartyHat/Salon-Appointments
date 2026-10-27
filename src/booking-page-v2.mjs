@@ -1,5 +1,5 @@
 import { services, bookingLaunch } from './data.mjs';
-import { arrow, eyebrow } from './components.mjs';
+import { eyebrow } from './components.mjs';
 import { formatDurationRange } from './duration.mjs';
 
 const money = value => Number.isInteger(value) ? `$${value}` : `$${value.toFixed(2)}`;
@@ -54,7 +54,7 @@ export function bookingPage() { return `
           <p class="fine-print">Your details are sent securely to the salon booking service only when submission is enabled and you submit.</p>
           <div class="booking-policy"><h3>Request first. Approval follows.</h3><p>When submissions open, your request will be marked Pending Approval. Your appointment will not be confirmed until Gladys reviews and approves it.</p></div>
           <div id="booking-recovery" class="booking-recovery" hidden><strong>Unresolved request found</strong><p id="booking-recovery-message"></p><button id="discard-pending" class="button button-text" type="button">Resolve by starting over</button></div>
-          <div class="panel-actions"><button class="button button-text prev-step" type="button">← Back</button><button id="submit-booking" class="button button-primary" type="submit"${bookingLaunch.submissionsEnabled ? '' : ' disabled'}>${bookingLaunch.submissionsEnabled ? 'Submit Request' : 'Submissions Paused'} ${arrow}</button></div>
+          <div class="panel-actions"><button class="button button-text prev-step" type="button">← Back</button><button id="submit-booking" class="button button-primary" type="submit"${bookingLaunch.submissionsEnabled ? '' : ' disabled'}>${bookingLaunch.submissionsEnabled ? 'Submit Request' : 'Submissions Paused'} </button></div>
           <p class="submission-note" id="submission-launch-note">${bookingLaunch.submissionsEnabled ? 'Submitting a request does not confirm an appointment.' : 'Final submission is disabled during the controlled integration review.'}</p>
         </div>
         <p id="booking-error" class="form-error" role="alert"></p>
