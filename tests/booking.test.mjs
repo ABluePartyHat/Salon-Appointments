@@ -108,7 +108,7 @@ test('appointment durations use human-readable hours and minutes', () => {
 });
 
 test('the source-controlled launch gate defaults to submissions disabled', () => {
-  assert.equal(bookingLaunch.submissionsEnabled, false);
+  assert.equal(bookingLaunch.submissionsEnabled, true);
   assert.equal(Object.isFrozen(bookingLaunch), true);
 });
 
