@@ -447,12 +447,12 @@ export function initBooking() {
     if (['date', 'services', 'hairLength'].includes(event.target.name)) void renderTimes();
   });
   form.addEventListener('submit', event => { event.preventDefault(); void submit(); });
+  // An uncertain submission may already have created a booking. Never erase its
+  // idempotency key simply because the customer wants to change the form.
+  // Restore the original request so the same request ID can be safely retried.
   $('#discard-pending').addEventListener('click', () => {
-    pendingStore.clear();
-    recovery.hidden = true;
-    submitButton.textContent = submissionsEnabled ? 'Submit Request ↗' : 'Submissions Paused ↗';
-    submitButton.disabled = !submissionsEnabled;
-    errorMessage.textContent = 'The saved retry was resolved locally. The earlier request may still have reached the salon; contact the salon before sending another if you are unsure.';
+    restorePending();
+    errorMessage.textContent = 'Your original request has been restored. Retry this same request to check its outcome, or contact the salon before making a different request.';
   });
 
   const requested = new URLSearchParams(location.search).get('service');
