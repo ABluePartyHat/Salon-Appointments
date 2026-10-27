@@ -18,11 +18,7 @@ async function replaceExactlyOnce(filename, before, after) {
   await writeFile(filename, content.replace(before, after), 'utf8');
 }
 
-await replaceExactlyOnce(
-  path.join(localTest, 'src', 'data.mjs'),
-  'Object.freeze({ submissionsEnabled: false })',
-  'Object.freeze({ submissionsEnabled: true })',
-);
+// Production is now enabled; the local harness inherits the same source gate.
 
 const book = path.join(localTest, 'book.html');
 await replaceExactlyOnce(
@@ -32,17 +28,17 @@ await replaceExactlyOnce(
 );
 await replaceExactlyOnce(
   book,
-  '<strong>Appointment requests are temporarily paused.</strong> You can explore services, estimates, and live availability, but cannot submit a request yet. No appointment will be booked.',
+  '<strong>Appointment requests are open.</strong> Choose your services and an available time, then submit a request for manual approval. Your appointment is not confirmed until the studio approves it. The studio will contact you directly; automatic confirmation emails are not currently sent.',
   '<strong>Local booking test mode.</strong> Availability and submission use the live Worker. Do not submit unless you intend to create a clearly labeled test booking.',
 );
 await replaceExactlyOnce(
   book,
-  'id="submit-booking" class="button button-primary" type="submit" disabled>Submissions Paused',
+  'id="submit-booking" class="button button-primary" type="submit">Submit Request',
   'id="submit-booking" class="button button-primary" type="submit">Submit Test Request',
 );
 await replaceExactlyOnce(
   book,
-  'Final submission is disabled during the controlled integration review.',
+  'Submitting a request does not confirm an appointment.',
   'Development environment: submitting creates a real Pending request in the live booking system.',
 );
 
@@ -50,4 +46,4 @@ const css = path.join(localTest, 'styles.css');
 const stylesheet = await readFile(css, 'utf8');
 await writeFile(css, `${stylesheet}\n.local-test-banner{position:relative;z-index:50;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:11px 20px;background:#7a241d;color:#fff;font-size:12px;letter-spacing:.02em}.local-test-banner strong{letter-spacing:.12em}.local-test-banner span{opacity:.92}\n`, 'utf8');
 
-console.log('Built local-only booking harness in .local-booking-test/. Production output remains gated.');
+console.log('Built local-only booking harness in .local-booking-test/. Production and local harness both use the enabled booking gate.');
