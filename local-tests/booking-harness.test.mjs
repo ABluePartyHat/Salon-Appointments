@@ -9,17 +9,17 @@ import { once } from 'node:events';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = relative => readFile(path.join(root, relative), 'utf8');
 
-test('production source and generated page remain gated', async () => {
+test('production source and generated page are explicitly enabled', async () => {
   const [data, page, flow] = await Promise.all([
     read('src/data.mjs'), read('book.html'), read('src/booking-flow-v2.js'),
   ]);
-  assert.match(data, /Object\.freeze\(\{ submissionsEnabled: false \}\)/);
-  assert.match(page, /id="submit-booking"[^>]*disabled/);
-  assert.match(page, /Submissions Paused/);
+  assert.match(data, /Object\.freeze\(\{ submissionsEnabled: true \}\)/);
+  assert.doesNotMatch(page, /id="submit-booking"[^>]*disabled/);
+  assert.match(page, /Submit Request/);
   assert.match(flow, /if \(!submissionsEnabled\)/);
 });
 
-test('local artifact alone enables and clearly labels the real form', async () => {
+test('local artifact clearly labels the real form', async () => {
   const [data, page, provider, flow] = await Promise.all([
     read('.local-booking-test/src/data.mjs'),
     read('.local-booking-test/book.html'),
