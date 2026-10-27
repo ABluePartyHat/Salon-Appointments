@@ -36,7 +36,8 @@ for (const name of names) test(`${name}: complete static page, valid links, uniq
   for (const [, attributes] of html.matchAll(/<img\s([^>]+)>/g)) assert.match(attributes, /alt="[^"]*"/);
   const schema = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
   assert.equal(schema['@type'], 'HairSalon');
-  assert.equal(schema.address, undefined, 'unconfirmed address must not appear in structured data');
+  assert.equal(schema.address.addressLocality, 'Miami');
+  assert.equal(schema.telephone, '+13054503223');
   assert.equal(schema.aggregateRating, undefined, 'sample reviews must not become SEO ratings');
 });
 
@@ -63,7 +64,7 @@ test('booking page uses only the Phase 3 Worker API and keeps Pending approval e
   assert.match(html, /not a confirmed appointment/i);
   assert.match(html, /id="submit-booking"[^>]*disabled/);
   assert.match(html, /Submissions Paused/);
-  assert.match(html, /Final submission is disabled during the controlled integration review/);
+  assert.match(html, /Appointment requests are temporarily paused/);
   assert.doesNotMatch(client, /fetch\s*\(|\.confirm\s*\(/);
   assert.match(data, /salon-booking-api\.pino-raul2\.workers\.dev\/api\/availability/);
   assert.match(data, /salon-booking-api\.pino-raul2\.workers\.dev\/api\/bookings/);
