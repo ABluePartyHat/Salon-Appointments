@@ -329,7 +329,7 @@ export function initBooking() {
   function showRecovery(message = UNCERTAIN_MESSAGE) {
     recovery.hidden = false;
     recoveryMessage.textContent = message;
-    submitButton.textContent = submissionsEnabled ? 'Retry Same Request ↗' : 'Submissions Paused ↗';
+    submitButton.textContent = submissionsEnabled ? 'Retry Same Request' : 'Submissions Paused';
     if (!submissionsEnabled) submitButton.disabled = true;
   }
 
@@ -450,7 +450,7 @@ export function initBooking() {
   $('#discard-pending').addEventListener('click', () => {
     pendingStore.clear();
     recovery.hidden = true;
-    submitButton.textContent = submissionsEnabled ? 'Submit Request ↗' : 'Submissions Paused ↗';
+    submitButton.textContent = submissionsEnabled ? 'Submit Request' : 'Submissions Paused';
     submitButton.disabled = !submissionsEnabled;
     errorMessage.textContent = 'The saved retry was resolved locally. The earlier request may still have reached the salon; contact the salon before sending another if you are unsure.';
   });
