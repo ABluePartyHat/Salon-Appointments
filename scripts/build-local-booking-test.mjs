@@ -32,7 +32,7 @@ await replaceExactlyOnce(
 );
 await replaceExactlyOnce(
   book,
-  '<strong>Live integration testing is in progress.</strong> You can browse services, estimates, and live availability, but final submission is temporarily paused. No appointment request will be sent.',
+  '<strong>Appointment requests are temporarily paused.</strong> You can explore services, estimates, and live availability, but cannot submit a request yet. No appointment will be booked.',
   '<strong>Local booking test mode.</strong> Availability and submission use the live Worker. Do not submit unless you intend to create a clearly labeled test booking.',
 );
 await replaceExactlyOnce(
