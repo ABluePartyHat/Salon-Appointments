@@ -4,9 +4,9 @@ import { formatDurationRange } from './duration.mjs';
 export const business = {
   name: 'Gladys Cosmetology Studio', stylist: 'Gladys Brito',
   instagram: 'https://www.instagram.com/gladyshairstyler/', handle: '@gladyshairstyler',
-  phone: '+12125550148', phoneDisplay: '(212) 555-0148', email: 'hello@example.com',
-  address: 'Studio address coming soon', locality: '', region: '', postalCode: '',
-  locationConfirmed: false, contactConfirmed: false,
+  phone: '+13054503223', phoneDisplay: '(305) 450-3223', email: 'rhd.cosmetology@gmail.com',
+  address: 'Annacapri Salon, Snapper Creek Shopping Center, 7110 SW 117th Ave', locality: 'Miami', region: 'FL', postalCode: '33183',
+  locationConfirmed: true, contactConfirmed: true,
   hours: [['Tuesday – Friday', '9:00 am – 6:00 pm'], ['Saturday', '9:00 am – 5:00 pm'], ['Sunday – Monday', 'Closed']],
   deposit: 25, cancellationHours: 24,
   origin: 'https://abluepartyhat.github.io/Salon-Appointments',
