@@ -36,7 +36,8 @@ for (const name of names) test(`${name}: complete static page, valid links, uniq
   for (const [, attributes] of html.matchAll(/<img\s([^>]+)>/g)) assert.match(attributes, /alt="[^"]*"/);
   const schema = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
   assert.equal(schema['@type'], 'HairSalon');
-  assert.equal(schema.address, undefined, 'unconfirmed address must not appear in structured data');
+  assert.equal(schema.address.addressLocality, 'Miami');
+  assert.equal(schema.telephone, '+13054503223');
   assert.equal(schema.aggregateRating, undefined, 'sample reviews must not become SEO ratings');
 });
 
