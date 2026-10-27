@@ -7,7 +7,7 @@ export const business = {
   phone: '+13054503223', phoneDisplay: '(305) 450-3223', email: 'rhd.cosmetology@gmail.com',
   address: 'Annacapri Salon, Snapper Creek Shopping Center, 7110 SW 117th Ave', locality: 'Miami', region: 'FL', postalCode: '33183',
   locationConfirmed: true, contactConfirmed: true,
-  hours: [['Tuesday – Friday', '9:00 am – 6:00 pm'], ['Saturday', '9:00 am – 5:00 pm'], ['Sunday – Monday', 'Closed']],
+  hours: [['Wednesday – Saturday', 'Appointments by availability'], ['Sunday – Tuesday', 'Closed']],
   deposit: 25, cancellationHours: 24,
   origin: 'https://abluepartyhat.github.io/Salon-Appointments',
   availabilityApiUrl: 'https://salon-booking-api.pino-raul2.workers.dev/api/availability',
@@ -16,7 +16,7 @@ export const business = {
 
 // Temporary Phase 3.1 launch gate. Change only this source value after the
 // controlled live test and review; browser storage and URL parameters cannot enable it.
-export const bookingLaunch = Object.freeze({ submissionsEnabled: true });
+export const bookingLaunch = Object.freeze({ submissionsEnabled: false });
 export const services = [
   { id: 'bleaching-lightening', name: 'Bleaching / Lightening', shortName: 'Lightening', category: 'Color', price: 80, prices: { short: 80, medium: 90, long: 100 }, durations: { short: [90, 120], medium: [120, 150], long: [150, 210] }, description: 'Customized lightening planned around your hair history, condition, and desired result.', includes: 'Consultation, customized lightening plan, and finishing care.', addons: 'Final scope is confirmed during consultation.', featured: true },
   { id: 'anti-frizz-treatment', name: 'Anti-Frizz Treatment', shortName: 'Anti-Frizz', category: 'Treatments', price: 90, prices: { short: 90, medium: 90, long: 90 }, durations: { short: [60, 90], medium: [90, 120], long: [120, 150] }, description: 'A smoothing service designed to soften frizz and make everyday styling easier.', includes: 'Consultation, treatment application, and finished style.', addons: 'Aftercare is tailored to your hair.' },
