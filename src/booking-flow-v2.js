@@ -337,7 +337,7 @@ export function initBooking() {
     const pending = pendingStore.get();
     if (!pending) return;
     if (sameBookingDraft(pending.payload, draft())) showRecovery();
-    else showRecovery('The booking details now differ from the unresolved request, which may already exist. Retry the original request after restoring its details, or explicitly start over before submitting new details.');
+    else showRecovery('The booking details now differ from the unresolved request, which may already exist. Restore the original details and retry the same request, or contact the salon before making a different request.');
   }
 
   function restorePending() {
@@ -402,8 +402,8 @@ export function initBooking() {
         let retry = false;
         if (pending) {
           if (!sameBookingDraft(pending.payload, currentDraft)) {
-            showRecovery('The previous request may already exist. Your edited details cannot use its request ID. Resolve that request before submitting a new one.');
-            errorMessage.textContent = 'Resolve the unresolved request before submitting changed booking details.';
+            showRecovery('The previous request may already exist. Your edited details cannot use its request ID. Restore the original request and retry it, or contact the salon before making a different request.');
+            errorMessage.textContent = 'Restore the original request before retrying; do not submit a different request until you have checked with the salon.';
             return;
           }
           payload = pending.payload;
