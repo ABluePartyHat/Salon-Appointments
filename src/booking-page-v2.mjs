@@ -20,7 +20,7 @@ function serviceChoice(service) {
 export function bookingPage() { return `
 <section class="page-intro container booking-intro">${eyebrow('MAKE A LITTLE TIME FOR YOU')}<h1>Your next chapter<br>starts <em>here.</em></h1><p>Build an appointment request and view real start-time availability.</p></section>
 <section class="container booking-section">
-  <div class="booking-demo-note"><span class="status-dot"></span><p><strong>Live integration testing is in progress.</strong> You can browse services, estimates, and live availability, but final submission is temporarily paused. No appointment request will be sent.</p></div>
+  <div class="booking-demo-note"><span class="status-dot"></span><p>${bookingLaunch.submissionsEnabled ? '<strong>Appointment requests are open.</strong> Choose your services and an available time, then submit a request for manual approval. Your appointment is not confirmed until the studio approves it. The studio will contact you directly; automatic confirmation emails are not currently sent.' : '<strong>Appointment requests are temporarily paused.</strong> You can explore services, estimates, and live availability, but cannot submit a request yet. No appointment will be booked.'}</p></div>
   <div class="booking-layout">
     <div>
       <ol class="booking-progress" aria-label="Booking steps">${['Hair length &amp; services', 'Estimate', 'Date &amp; time', 'Your details'].map((label, index) => `<li data-progress="${index}" ${index === 0 ? 'aria-current="step"' : ''}><span>${index + 1}</span>${label}</li>`).join('')}</ol>
