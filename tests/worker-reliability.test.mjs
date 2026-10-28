@@ -66,3 +66,29 @@ test('disabled booking submissions reject before upstream', async () => {
     assert.equal((await worker.fetch(request(), { ...env, BOOKING_SUBMISSIONS_ENABLED: 'false' })).status, 503);
   });
 });
+
+test('explicit slot conflict returns 409 with typed code', async () => {
+  await withUpstream(async () => new Response(JSON.stringify({
+    ok: false, code: 'SLOT_UNAVAILABLE', error: 'That appointment time is no longer available.'
+  })), async () => {
+    const response = await worker.fetch(request(), env);
+    assert.equal(response.status, 409);
+    assert.equal((await response.json()).code, 'SLOT_UNAVAILABLE');
+  });
+});
+test('explicit idempotency mismatch returns 409 with typed code', async () => {
+  await withUpstream(async () => new Response(JSON.stringify({
+    ok: false, code: 'IDEMPOTENCY_CONFLICT'
+  })), async () => {
+    const response = await worker.fetch(request(), env);
+    assert.equal(response.status, 409);
+    assert.equal((await response.json()).code, 'IDEMPOTENCY_CONFLICT');
+  });
+});
+test('unknown or untyped failure remains uncertain', async () => {
+  await withUpstream(async () => new Response(JSON.stringify({
+    ok: false, code: 'UNEXPECTED_FAILURE'
+  })), async () => {
+    assert.equal((await worker.fetch(request(), env)).status, 502);
+  });
+});
