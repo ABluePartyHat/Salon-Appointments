@@ -50,7 +50,7 @@ export default {
       if (Number(request.headers.get('Content-Length')) > 8192)
         return respond({ ok: false, error: 'Request too large.' }, 413);
       const raw = await request.text();
-      if (raw.length > 8192) return respond({ ok: false, error: 'Request too large.' }, 413);
+      if (new TextEncoder().encode(raw).byteLength > 8192) return respond({ ok: false, error: 'Request too large.' }, 413);
       let booking;
       try { booking = JSON.parse(raw); } catch { return respond({ ok: false, error: 'Invalid JSON.' }, 400); }
       if (!booking || typeof booking !== 'object' || Array.isArray(booking) ||
