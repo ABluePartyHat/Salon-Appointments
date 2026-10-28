@@ -83,6 +83,16 @@ export default {
       let result;
       try { result = await upstream.json(); }
       catch { return respond({ ok: false, error: 'Invalid upstream response.' }, 502); }
+      if (payload.action === 'booking' && result && result.ok === false &&
+          (result.code === 'SLOT_UNAVAILABLE' || result.code === 'IDEMPOTENCY_CONFLICT')) {
+        return respond({
+          ok: false,
+          code: result.code,
+          error: result.code === 'SLOT_UNAVAILABLE'
+            ? 'That appointment time is no longer available.'
+            : 'Request ID already belongs to a different booking.'
+        }, 409);
+      }
       if (!result || typeof result !== 'object' || result.ok !== true) {
         // Apps Script returns HTTP 200 even for caught exceptions. Without a
         // typed failure contract, we cannot prove the booking was not written.
