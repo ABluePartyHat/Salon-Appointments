@@ -2,7 +2,7 @@
  * Salon booking Worker — reviewed candidate, NOT deployed.
  * Required secrets: ALLOWED_ORIGIN, APPS_SCRIPT_URL, API_SHARED_SECRET.
  * Optional: BOOKING_SUBMISSIONS_ENABLED, LOCAL_TEST_ORIGIN,
- * CONTROLLED_TEST_TOKEN, CONTROLLED_TEST_REQUEST_ID.
+ * CONTROLLED_TEST_TOKEN, CONTROLLED_TEST_REQUEST_ID, CONTROLLED_TEST_REQUEST_ID_2.
  */
 export default {
   async fetch(request, env) {
@@ -37,6 +37,7 @@ export default {
       const testToken = request.headers.get('X-Salon-Test-Token');
       const configuredToken = env.CONTROLLED_TEST_TOKEN;
       const configuredId = env.CONTROLLED_TEST_REQUEST_ID;
+      const secondId = env.CONTROLLED_TEST_REQUEST_ID_2;
       const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       const tokenMatches = typeof configuredToken === 'string' && configuredToken.length >= 32 &&
         typeof testToken === 'string' && testToken.length === configuredToken.length &&
@@ -59,7 +60,8 @@ export default {
           booking.services.some(id => typeof id !== 'string' || !/^[a-z0-9-]{1,60}$/.test(id)) ||
           !['short', 'medium', 'long'].includes(booking.hairLength))
         return respond({ ok: false, error: 'Invalid multi-service booking.' }, 400);
-      if (controlledTest && booking.requestId.toLowerCase() !== configuredId.toLowerCase())
+      const allowedTestIds = [configuredId, secondId].filter(id => typeof id === 'string' && uuid.test(id));
+      if (controlledTest && !allowedTestIds.some(id => booking.requestId.toLowerCase() === id.toLowerCase()))
         return respond({ ok: false, error: 'Controlled test request ID mismatch.' }, 403);
       payload = { action: 'booking', booking };
     } else {
