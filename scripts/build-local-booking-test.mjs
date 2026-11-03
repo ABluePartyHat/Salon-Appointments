@@ -18,32 +18,22 @@ async function replaceExactlyOnce(filename, before, after) {
   await writeFile(filename, content.replace(before, after), 'utf8');
 }
 
-// Production is now enabled; the local harness inherits the same source gate.
-
+// Keep the local harness in the same safe, submissions-paused state as production.
+// Never enable live bookings through a build-only testing convenience.
 const book = path.join(localTest, 'book.html');
 await replaceExactlyOnce(
   book,
   '<body data-page="book">',
-  '<body data-page="book" data-local-booking-test="true"><div class="local-test-banner" role="status"><strong>LOCAL DEVELOPMENT TEST</strong><span>This page can send a real Pending booking request. Use only clearly labeled test customer data.</span></div>',
+  '<body data-page="book" data-local-booking-test="true"><div class="local-test-banner" role="status"><strong>LOCAL DEVELOPMENT TEST</strong><span>Booking submissions remain disabled. This page is for inspecting the booking interface only.</span></div>',
 );
 await replaceExactlyOnce(
   book,
-  '<strong>Appointment requests are open.</strong> Choose your services and an available time, then submit a request for manual approval. Your appointment is not confirmed until the studio approves it. The studio will contact you directly; automatic confirmation emails are not currently sent.',
-  '<strong>Local booking test mode.</strong> Availability and submission use the live Worker. Do not submit unless you intend to create a clearly labeled test booking.',
-);
-await replaceExactlyOnce(
-  book,
-  'id="submit-booking" class="button button-primary" type="submit">Submit Request',
-  'id="submit-booking" class="button button-primary" type="submit">Submit Test Request',
-);
-await replaceExactlyOnce(
-  book,
-  'Submitting a request does not confirm an appointment.',
-  'Development environment: submitting creates a real Pending request in the live booking system.',
+  'Appointment requests are temporarily paused.',
+  'Appointment requests are temporarily paused (local test).',
 );
 
 const css = path.join(localTest, 'styles.css');
 const stylesheet = await readFile(css, 'utf8');
 await writeFile(css, `${stylesheet}\n.local-test-banner{position:relative;z-index:50;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:11px 20px;background:#7a241d;color:#fff;font-size:12px;letter-spacing:.02em}.local-test-banner strong{letter-spacing:.12em}.local-test-banner span{opacity:.92}\n`, 'utf8');
 
-console.log('Built local-only booking harness in .local-booking-test/. Production and local harness both use the enabled booking gate.');
+console.log('Built local-only booking harness in .local-booking-test/. Production and local harness both keep submissions disabled.');
