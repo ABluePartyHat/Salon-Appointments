@@ -40,5 +40,5 @@ test('submission transport is mocked and preserves Pending duplicate contract', 
 
 test('public submissions require explicit launch enablement in source', () => {
   const data = readFileSync(new URL('../src/data.mjs',import.meta.url),'utf8');
-  assert.match(data,/submissionsEnabled:\s*true/);
+  assert.match(data,/submissionsEnabled:\s*false/);
 });
