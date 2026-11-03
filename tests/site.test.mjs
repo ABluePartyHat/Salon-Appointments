@@ -70,7 +70,7 @@ test('booking page uses only the Phase 3 Worker API and keeps Pending approval e
   assert.match(data, /salon-booking-api\.pino-raul2\.workers\.dev\/api\/bookings/);
   assert.match(provider, /method:\s*['"]POST['"]/);
   assert.match(flow, /sessionStorage/);
-  assert.match(data, /submissionsEnabled:\s*true/);
+  assert.match(data, /submissionsEnabled:\s*false/);
   assert.match(flow, /if \(!submissionsEnabled\)/);
   assert.doesNotMatch(flow, /searchParams.*submissionsEnabled|localStorage.*submissionsEnabled|sessionStorage.*submissionsEnabled/);
   assert.doesNotMatch(`${provider}\n${flow}`, /(?:['"`])(?:\.\.\/)?api\//, 'must not use the legacy local api backend');
