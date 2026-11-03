@@ -62,7 +62,7 @@ test('booking page uses only the Phase 3 Worker API and keeps Pending approval e
   assert.match(html, /id="booking-loading-overlay"[^>]*hidden[^>]*role="status"/);
   assert.match(html, /Request Received — Pending Approval/);
   assert.match(html, /not a confirmed appointment/i);
-  assert.doesNotMatch(html, /id="submit-booking"[^>]*disabled/);
+  assert.match(html, /id="submit-booking"[^>]*disabled/);
   assert.match(html, /Submit Request/);
   assert.match(html, /Submitting a request does not confirm an appointment/);
   assert.doesNotMatch(client, /fetch\s*\(|\.confirm\s*\(/);
