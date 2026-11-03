@@ -13,7 +13,7 @@ test('production source and generated page keep submissions paused', async () =>
   const [data, page, flow] = await Promise.all([
     read('src/data.mjs'), read('book.html'), read('src/booking-flow-v2.js'),
   ]);
-  assert.match(data, /Object\.freeze\(\{ submissionsEnabled: true \}\)/);
+  assert.match(data, /Object\.freeze\(\{ submissionsEnabled: false \}\)/);
   assert.match(page, /id="submit-booking"[^>]*disabled/);
   assert.match(page, /Submissions Paused/);
   assert.match(flow, /if \(!submissionsEnabled\)/);
@@ -26,7 +26,7 @@ test('local artifact clearly labels the real form', async () => {
     read('.local-booking-test/src/booking-provider.mjs'),
     read('.local-booking-test/src/booking-flow-v2.js'),
   ]);
-  assert.match(data, /Object\.freeze\(\{ submissionsEnabled: true \}\)/);
+  assert.match(data, /Object\.freeze\(\{ submissionsEnabled: false \}\)/);
   assert.match(page, /LOCAL DEVELOPMENT TEST/);
   assert.match(page, /Appointment requests are temporarily paused \\(local test\\)/);
   assert.match(page, /id="submit-booking"[^>]*disabled/);
