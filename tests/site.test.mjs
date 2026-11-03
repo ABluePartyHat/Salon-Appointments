@@ -63,7 +63,7 @@ test('booking page uses only the Phase 3 Worker API and keeps Pending approval e
   assert.match(html, /Request Received — Pending Approval/);
   assert.match(html, /not a confirmed appointment/i);
   assert.match(html, /id="submit-booking"[^>]*disabled/);
-  assert.match(html, /Submit Request/);
+  assert.match(html, /Submissions Paused/);
   assert.match(html, /Submitting a request does not confirm an appointment/);
   assert.doesNotMatch(client, /fetch\s*\(|\.confirm\s*\(/);
   assert.match(data, /salon-booking-api\.pino-raul2\.workers\.dev\/api\/availability/);
