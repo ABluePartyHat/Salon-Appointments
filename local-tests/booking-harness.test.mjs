@@ -9,13 +9,13 @@ import { once } from 'node:events';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = relative => readFile(path.join(root, relative), 'utf8');
 
-test('production source and generated page are explicitly enabled', async () => {
+test('production source and generated page keep submissions paused', async () => {
   const [data, page, flow] = await Promise.all([
     read('src/data.mjs'), read('book.html'), read('src/booking-flow-v2.js'),
   ]);
   assert.match(data, /Object\.freeze\(\{ submissionsEnabled: true \}\)/);
-  assert.doesNotMatch(page, /id="submit-booking"[^>]*disabled/);
-  assert.match(page, /Submit Request/);
+  assert.match(page, /id="submit-booking"[^>]*disabled/);
+  assert.match(page, /Submissions Paused/);
   assert.match(flow, /if \(!submissionsEnabled\)/);
 });
 
@@ -28,8 +28,8 @@ test('local artifact clearly labels the real form', async () => {
   ]);
   assert.match(data, /Object\.freeze\(\{ submissionsEnabled: true \}\)/);
   assert.match(page, /LOCAL DEVELOPMENT TEST/);
-  assert.match(page, /Submit Test Request/);
-  assert.doesNotMatch(page, /id="submit-booking"[^>]*disabled/);
+  assert.match(page, /Appointment requests are temporarily paused \\(local test\\)/);
+  assert.match(page, /id="submit-booking"[^>]*disabled/);
   assert.match(data, /salon-booking-api\.pino-raul2\.workers\.dev\/api\/availability/);
   assert.match(data, /salon-booking-api\.pino-raul2\.workers\.dev\/api\/bookings/);
   assert.match(provider, /method: 'POST'/);
